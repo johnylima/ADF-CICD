@@ -1,0 +1,20 @@
+{
+	"name": "ParquetSource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageDev",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "storagesales-source"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
