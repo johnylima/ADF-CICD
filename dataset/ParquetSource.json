@@ -2,7 +2,7 @@
 	"name": "ParquetSource",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorageDev",
+			"referenceName": "AzureBlobStorage_ls",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
