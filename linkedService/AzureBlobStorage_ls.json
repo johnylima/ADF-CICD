@@ -1,0 +1,17 @@
+{
+	"name": "AzureBlobStorage_ls",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault_ls",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "stgeastus2dev-conn"
+			}
+		}
+	}
+}
