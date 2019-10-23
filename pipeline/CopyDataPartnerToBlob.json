@@ -55,6 +55,12 @@
 						"dependencyConditions": [
 							"Failed"
 						]
+					},
+					{
+						"activity": "Validation SQL Data",
+						"dependencyConditions": [
+							"Failed"
+						]
 					}
 				],
 				"policy": {
