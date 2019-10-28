@@ -1,6 +1,5 @@
 {
 	"name": "AzureSqlDatabaseAppDb",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",
@@ -11,8 +10,10 @@
 					"referenceName": "AzureKeyVaultPatner",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "AppDb-Conn"
+				"secretName": "AppDb-Conn",
+				"secretVersion": ""
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
