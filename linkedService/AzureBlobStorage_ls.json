@@ -10,7 +10,8 @@
 					"referenceName": "AzureKeyVault_ls",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "stgeastus2dev-conn"
+				"secretName": "stgeastus2dev-conn",
+				"secretVersion": "sqladmin"
 			}
 		}
 	}
