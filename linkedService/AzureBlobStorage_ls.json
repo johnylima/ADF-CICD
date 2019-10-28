@@ -11,7 +11,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "stgeastus2dev-conn",
-				"secretVersion": "sqladmin"
+				"secretVersion": ""
 			}
 		}
 	}
