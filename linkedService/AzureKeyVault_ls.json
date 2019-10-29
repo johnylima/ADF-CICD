@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://kv-adfdevops-dev.vault.azure.net/"
+			"baseUrl": "https://kv-dataops-dev.vault.azure.net/"
 		}
 	}
 }
