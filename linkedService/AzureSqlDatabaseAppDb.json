@@ -7,7 +7,7 @@
 			"connectionString": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "AzureKeyVaultPatner",
+					"referenceName": "AzureKeyVaultPartner",
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "AppDb-Conn",
