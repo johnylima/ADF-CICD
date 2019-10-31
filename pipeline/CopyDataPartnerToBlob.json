@@ -65,7 +65,7 @@
 				}
 			},
 			{
-				"name": "Boston-Data",
+				"name": "OrchestrateBoston",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
