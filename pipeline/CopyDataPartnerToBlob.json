@@ -65,8 +65,8 @@
 				}
 			},
 			{
-				"name": "Wait3seconds",
-				"type": "Wait",
+				"name": "Boston-Data",
+				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
 						"activity": "PersonSQLPartnerToBlob",
@@ -75,9 +75,20 @@
 						]
 					}
 				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"waitTimeInSeconds": 3
+					"notebookPath": "/Boston-Data-FLD/Boston-Data-Notebook"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
