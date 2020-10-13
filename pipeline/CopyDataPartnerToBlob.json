@@ -52,6 +52,12 @@
 						"dependencyConditions": [
 							"Failed"
 						]
+					},
+					{
+						"activity": "PersonSQLPartnerToBlob",
+						"dependencyConditions": [
+							"Failed"
+						]
 					}
 				],
 				"policy": {
