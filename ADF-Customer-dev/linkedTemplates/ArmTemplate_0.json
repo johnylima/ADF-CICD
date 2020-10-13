@@ -94,7 +94,7 @@
 						},
 						"secretName": "adb-token-dev"
 					},
-					"existingClusterId": "0814-003052-jam809"
+					"existingClusterId": "1013-230649-rakes553"
 				}
 			},
 			"dependsOn": [
@@ -224,6 +224,12 @@
 						"dependsOn": [
 							{
 								"activity": "OrchestrateBoston",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "PersonSQLPartnerToBlob",
 								"dependencyConditions": [
 									"Failed"
 								]
