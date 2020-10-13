@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADF-Customer-dev"
+		},
+		"AzureBlobStorage_ls_properties_typeProperties_connectionString_secretName": {
+			"value": "stgeastus2dev-conn"
+		},
+		"AzureKeyVaultPartner_properties_typeProperties_baseUrl": {
+			"value": "https://PartnerKeys.vault.azure.net/"
+		},
+		"AzureKeyVault_ls_properties_typeProperties_baseUrl": {
+			"value": "https://kv-dataops-dev.vault.azure.net/"
+		},
+		"AzureSqlDatabaseAppDb_properties_typeProperties_connectionString_secretName": {
+			"value": "AppDb-Conn"
+		}
+	}
+}
