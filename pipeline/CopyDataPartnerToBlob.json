@@ -23,6 +23,9 @@
 						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false
@@ -44,12 +47,6 @@
 				"name": "SendEmailFail",
 				"type": "WebActivity",
 				"dependsOn": [
-					{
-						"activity": "PersonSQLPartnerToBlob",
-						"dependencyConditions": [
-							"Failed"
-						]
-					},
 					{
 						"activity": "OrchestrateBoston",
 						"dependencyConditions": [
