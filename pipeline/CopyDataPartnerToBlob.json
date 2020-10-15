@@ -5,14 +5,7 @@
 			{
 				"name": "PersonSQLPartnerToBlob",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Validation",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -55,13 +48,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "OrchestrateBoston",
-						"dependencyConditions": [
-							"Failed"
-						]
-					},
-					{
-						"activity": "PersonSQLPartnerToBlob",
+						"activity": "Boston-Data",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -82,7 +69,7 @@
 				}
 			},
 			{
-				"name": "OrchestrateBoston",
+				"name": "Boston-Data",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -106,20 +93,6 @@
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
 					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "Validation",
-				"type": "Validation",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "AzureSqlTablePerson",
-						"type": "DatasetReference"
-					},
-					"timeout": "7.00:00:00",
-					"sleep": 10
 				}
 			}
 		],
