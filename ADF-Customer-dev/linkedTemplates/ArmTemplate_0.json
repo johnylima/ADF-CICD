@@ -297,7 +297,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Validation",
+								"activity": "Validation1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -351,12 +351,6 @@
 								"dependencyConditions": [
 									"Failed"
 								]
-							},
-							{
-								"activity": "PersonSQLPartnerToBlob",
-								"dependencyConditions": [
-									"Failed"
-								]
 							}
 						],
 						"policy": {
@@ -402,7 +396,7 @@
 						}
 					},
 					{
-						"name": "Validation",
+						"name": "Validation1",
 						"type": "Validation",
 						"dependsOn": [],
 						"userProperties": [],
