@@ -5,14 +5,7 @@
 			{
 				"name": "PersonSQLPartnerToBlob",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Validation1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -51,31 +44,6 @@
 				]
 			},
 			{
-				"name": "SendEmailFail",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "OrchestrateBoston",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": "http://www.microsoft.com",
-					"method": "POST",
-					"body": "xpto"
-				}
-			},
-			{
 				"name": "OrchestrateBoston",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
@@ -100,20 +68,6 @@
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
 					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "Validation1",
-				"type": "Validation",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "AzureSqlTablePerson",
-						"type": "DatasetReference"
-					},
-					"timeout": "7.00:00:00",
-					"sleep": 10
 				}
 			}
 		],
