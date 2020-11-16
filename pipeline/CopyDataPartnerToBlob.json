@@ -86,6 +86,23 @@
 					"timeout": "7.00:00:00",
 					"sleep": 10
 				}
+			},
+			{
+				"name": "Validation2",
+				"type": "Validation",
+				"dependsOn": [
+					{
+						"activity": "Validation1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"timeout": "7.00:00:00",
+					"sleep": 10
+				}
 			}
 		],
 		"annotations": []
