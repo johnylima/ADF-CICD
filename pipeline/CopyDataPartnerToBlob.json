@@ -70,7 +70,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": ""
+					"notebookPath": "/Boston-Data-FLD/Boston-Data-Notebook"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
