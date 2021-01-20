@@ -83,6 +83,10 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"dataset": {
+						"referenceName": "AzureSqlTablePerson",
+						"type": "DatasetReference"
+					},
 					"timeout": "7.00:00:00",
 					"sleep": 10
 				}
