@@ -1,40 +1,13 @@
 {
-	"name": "CreateCluster",
+	"name": "ManagerCluster",
 	"properties": {
 		"activities": [
 			{
-				"name": "OrchestrateBoston",
-				"type": "DatabricksNotebook",
+				"name": "Python2",
+				"type": "DatabricksSparkPython",
 				"dependsOn": [
 					{
-						"activity": "Python2",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"notebookPath": "/Boston-Data-FLD/Boston-Data-Notebook"
-				},
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricks",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "audience-notebook",
-				"type": "DatabricksNotebook",
-				"dependsOn": [
-					{
-						"activity": "OrchestrateBoston",
+						"activity": "If Condition1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -50,7 +23,13 @@
 				"userProperties": []
 			},
 			{
-				"name": "Python2",
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": []
+			},
+			{
+				"name": "Python3",
 				"type": "DatabricksSparkPython",
 				"dependsOn": [],
 				"policy": {

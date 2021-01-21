@@ -5,7 +5,14 @@
 			{
 				"name": "OrchestrateBoston",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -43,30 +50,37 @@
 				"userProperties": []
 			},
 			{
-				"name": "SendEMail",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "OrchestrateBoston",
-						"dependencyConditions": [
-							"Failed"
-						]
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ManagerCluster",
+						"type": "PipelineReference"
 					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute Pipeline2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
 					{
 						"activity": "audience-notebook",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ManagerCluster",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
