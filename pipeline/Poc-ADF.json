@@ -51,6 +51,12 @@
 						"dependencyConditions": [
 							"Failed"
 						]
+					},
+					{
+						"activity": "audience-notebook",
+						"dependencyConditions": [
+							"Failed"
+						]
 					}
 				],
 				"policy": {
