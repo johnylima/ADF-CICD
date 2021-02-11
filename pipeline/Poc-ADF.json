@@ -7,7 +7,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Validation1",
+						"activity": "SparkJarActivity",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -50,13 +50,24 @@
 				"userProperties": []
 			},
 			{
-				"name": "Validation1",
-				"type": "Validation",
+				"name": "SparkJarActivity",
+				"type": "DatabricksSparkJar",
 				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"timeout": "7.00:00:00",
-					"sleep": 10
+					"mainClassName": "org.apache.spark.examples.SparkPi",
+					"libraries": [
+						{
+							"jar": "dbfs:/FileStore/jars/1c126344_cd93_477e_b678_20f290545b6c-sparkpi_assembly_0_1-37030.jar"
+						}
+					]
 				}
 			}
 		],
