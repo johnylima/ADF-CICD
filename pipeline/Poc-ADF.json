@@ -7,7 +7,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Execute Pipeline1",
+						"activity": "Validation1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -48,46 +48,6 @@
 					"secureInput": false
 				},
 				"userProperties": []
-			},
-			{
-				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Validation1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "ManagerCluster",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
-			},
-			{
-				"name": "Execute Pipeline2",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "audience-notebook",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "ManagerCluster",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
 			},
 			{
 				"name": "Validation1",

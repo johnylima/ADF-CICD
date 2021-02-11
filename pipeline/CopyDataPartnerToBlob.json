@@ -92,23 +92,28 @@
 				}
 			},
 			{
-				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "OrchestrateBoston",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"name": "SparkJarActivity",
+				"type": "DatabricksSparkJar",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "Blob_pipe2",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
+					"mainClassName": "org.apache.spark.examples.SparkPi",
+					"libraries": [
+						{
+							"jar": "dbfs:/docs/sparkpi.jar"
+						}
+					]
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
