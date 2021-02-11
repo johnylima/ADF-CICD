@@ -70,6 +70,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"mainClassName": "org.apache.spark.examples.SparkPi",
+					"parameters": [],
 					"libraries": [
 						{
 							"jar": "dbfs:/FileStore/jars/1c126344_cd93_477e_b678_20f290545b6c-sparkpi_assembly_0_1-37030.jar"
