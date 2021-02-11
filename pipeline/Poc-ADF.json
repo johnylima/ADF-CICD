@@ -30,7 +30,7 @@
 				}
 			},
 			{
-				"name": "audience-notebook",
+				"name": "diamonds-table-demo",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -49,7 +49,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Audience/audience-notebook"
+					"notebookPath": "/Boston-Data-FLD/diamonds-table-demo"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks",
