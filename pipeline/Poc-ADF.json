@@ -7,7 +7,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "ValidationCVS",
+						"activity": "SparkJarActivity",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -30,33 +30,6 @@
 				}
 			},
 			{
-				"name": "diamonds-table-demo",
-				"type": "DatabricksNotebook",
-				"dependsOn": [
-					{
-						"activity": "OrchestrateBoston",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"notebookPath": "/Boston-Data-FLD/diamonds-table-demo"
-				},
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricks",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
 				"name": "SparkJarActivity",
 				"type": "DatabricksSparkJar",
 				"dependsOn": [],
@@ -69,11 +42,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"mainClassName": "org.apache.spark.examples.SparkPi",
-					"parameters": [],
+					"mainClassName": "liquibase.integration.commandline.Main",
+					"parameters": [
+						""
+					],
 					"libraries": [
 						{
-							"jar": "dbfs:/FileStore/jars/1c126344_cd93_477e_b678_20f290545b6c-sparkpi_assembly_0_1-37030.jar"
+							"jar": "dbfs:/FileStore/jars/642b2ec0_00da_459e_aec8_b8b9c41779b6-liquibase_Spark_0_0-40f79.jar"
 						}
 					]
 				},
@@ -81,86 +56,6 @@
 					"referenceName": "AzureDatabricks",
 					"type": "LinkedServiceReference"
 				}
-			},
-			{
-				"name": "ValidationCVS",
-				"type": "Validation",
-				"dependsOn": [
-					{
-						"activity": "CopyCSV",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "TestCsv",
-						"type": "DatasetReference"
-					},
-					"timeout": "7.00:00:00",
-					"sleep": 10
-				}
-			},
-			{
-				"name": "CopyCSV",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "SparkJarActivity",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "AzureSqlTablePerson",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "TestCsv",
-						"type": "DatasetReference"
-					}
-				]
 			}
 		],
 		"annotations": []
