@@ -94,7 +94,7 @@
 						},
 						"secretName": "adb-token-dev"
 					},
-					"existingClusterId": "0120-162222-since636"
+					"existingClusterId": "0126-165920-conic159"
 				}
 			},
 			"dependsOn": [
@@ -122,6 +122,98 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVaultPartner')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Poc-ADF')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "OrchestrateBoston",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "SparkJarActivity",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Boston-Data-FLD/Boston-Data-Notebook"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "diamonds-table-demo",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "OrchestrateBoston",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Boston-Data-FLD/diamonds-table-demo"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "SparkJarActivity",
+						"type": "DatabricksSparkJar",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"mainClassName": "org.apache.spark.examples.SparkPi",
+							"libraries": [
+								{
+									"jar": "dbfs:/FileStore/jars/1c126344_cd93_477e_b678_20f290545b6c-sparkpi_assembly_0_1-37030.jar"
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"
 			]
 		},
 		{
@@ -167,123 +259,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_ls')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Blob_pipe2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "PersonSQLPartnerToBlob",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSqlTablePerson",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ParquetSource",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "SendEmailFail",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "OrchestrateBoston",
-								"dependencyConditions": [
-									"Failed"
-								]
-							},
-							{
-								"activity": "PersonSQLPartnerToBlob",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "http://www.microsoft.com",
-							"method": "POST",
-							"headers": {},
-							"body": "xpto"
-						}
-					},
-					{
-						"name": "OrchestrateBoston",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "PersonSQLPartnerToBlob",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Boston-Data-FLD/Boston-Data-Notebook"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricks",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTablePerson')]",
-				"[concat(variables('factoryId'), '/datasets/ParquetSource')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"
 			]
 		},
 		{
@@ -383,27 +358,6 @@
 							"timeout": "7.00:00:00",
 							"sleep": 10
 						}
-					},
-					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "OrchestrateBoston",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Blob_pipe2",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
 					}
 				],
 				"annotations": []
@@ -411,8 +365,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTablePerson')]",
 				"[concat(variables('factoryId'), '/datasets/ParquetSource')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]",
-				"[concat(variables('factoryId'), '/pipelines/Blob_pipe2')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"
 			]
 		}
 	]

@@ -6,22 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "ADF-Customer-dev"
-		},
-		"AzureBlobStorage_ls_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "stgeastus2dev-conn"
-		},
-		"AzureKeyVaultPartner_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://PartnerKeys.vault.azure.net/"
-		},
-		"AzureKeyVault_ls_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://kv-dataops-dev.vault.azure.net/"
-		},
-		"AzureSqlDatabaseAppDb_properties_typeProperties_connectionString_secretName": {
-			"type": "string",
-			"defaultValue": "AppDb-Conn"
 		}
 	},
 	"variables": {
@@ -72,15 +56,13 @@
 						"inputs": [
 							{
 								"referenceName": "AzureSqlTablePerson",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "ParquetSource",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -119,8 +101,7 @@
 						"typeProperties": {
 							"dataset": {
 								"referenceName": "AzureSqlTablePerson",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"timeout": "7.00:00:00",
 							"sleep": 10
@@ -130,8 +111,6 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTablePerson')]",
-				"[concat(variables('factoryId'), '/datasets/ParquetSource')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks')]"
 			]
 		},
@@ -228,74 +207,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTablePerson')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabaseAppDb",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Person"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabaseAppDb')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ParquetSource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage_ls",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "storagesales-source"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_ls')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage_ls')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "AzureKeyVault_ls",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('AzureBlobStorage_ls_properties_typeProperties_connectionString_secretName')]",
-						"secretVersion": ""
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault_ls')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureDatabricks')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -315,58 +226,7 @@
 					"existingClusterId": "0126-165920-conic159"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault_ls')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVaultPartner')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVaultPartner_properties_typeProperties_baseUrl')]"
-				}
-			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault_ls')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault_ls_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseAppDb')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "AzureKeyVaultPartner",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "[parameters('AzureSqlDatabaseAppDb_properties_typeProperties_connectionString_secretName')]",
-						"secretVersion": ""
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVaultPartner')]"
-			]
 		}
 	]
 }
